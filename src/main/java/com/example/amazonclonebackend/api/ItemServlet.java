@@ -34,15 +34,25 @@ public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try(Connection connection = dataSource.getConnection()){
-            ItemService itemService = new ItemService(connection);
-            List<ItemDTO> items = itemService.getAllItems();
+        try (Connection connection = dataSource.getConnection()) {
             Jsonb jsonb = JsonbBuilder.create();
+            ItemService itemService = new ItemService(connection);
+            String code = req.getParameter("code");
             resp.setContentType("application/json");
-            resp.getWriter().println(jsonb.toJson(items));
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to obtain a new connection");
+            if (code != null){
+                ItemDTO item = itemService.getItem(code);
+                if (item != null){
+                    resp.getWriter().println(jsonb.toJson(item));
+                }else{
+                    resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                }
+            }else{
+                List<ItemDTO> items = itemService.getAllItems();
+                resp.getWriter().println(jsonb.toJson(items));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException("Failed to obtain a new connection ", ex);
         }
     }
 

@@ -18,16 +18,13 @@ public class CORSFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         resp.setHeader("Access-Control-Allow-Origin", "*");
-
         if (req.getMethod().equalsIgnoreCase("OPTIONS")){
             resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
             resp.setHeader("Access-Control-Allow-Methods", "POST, PUT, DELETE, GET");
         }
-
         if (req.getMethod().equalsIgnoreCase("GET")){
             resp.setHeader("Access-Control-Expose-Headers", "X-Total-Count");
         }
-
         filterChain.doFilter(servletRequest, servletResponse);
 
     }
@@ -39,7 +36,6 @@ public class CORSFilter implements Filter {
 
         public FakeResponse(HttpServletResponse response) throws IOException {
             super(response);
-
             fakeWriter = new PrintWriter(super.getOutputStream()) {
 
                 @Override
