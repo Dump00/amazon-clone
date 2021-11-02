@@ -9,24 +9,47 @@ public class ItemDTO implements Serializable {
     private String image;
     private Rating rating;
     private int qty;
-    private BigDecimal unit_price;
+    private BigDecimal unitPrice;
     private String description;
-
-    public enum Rating{
-        FIRST, SECOND, THIRD, FOURTH, FIFTH
-    }
 
     public ItemDTO() {
     }
 
-    public ItemDTO(String code, String title, String image, Rating rating, int qty, BigDecimal unit_price, String description) {
+    public ItemDTO(String code, String title, String image, Rating rating, int qty, BigDecimal unitPrice, String description) {
         this.code = code;
         this.title = title;
         this.image = image;
         this.rating = rating;
         this.qty = qty;
-        this.unit_price = unit_price;
+        this.unitPrice = unitPrice;
         this.description = description;
+    }
+
+    public ItemDTO(String code, String title, String image, String rating, int qty, BigDecimal unitPrice, String description) {
+        this.code = code;
+        this.title = title;
+        this.image = image;
+        this.qty = qty;
+        this.unitPrice = unitPrice;
+        this.description = description;
+
+        switch (rating){
+            case "2":
+                this.rating = Rating.SECOND;
+                break;
+            case "3":
+                this.rating = Rating.THIRD;
+                break;
+            case "4":
+                this.rating = Rating.FOURTH;
+                break;
+            case "5":
+                this.rating = Rating.FIFTH;;
+                break;
+            case "1":
+            default:
+                this.rating = Rating.FIRST;
+        }
     }
 
     public String getCode() {
@@ -69,12 +92,12 @@ public class ItemDTO implements Serializable {
         this.qty = qty;
     }
 
-    public BigDecimal getUnit_price() {
-        return unit_price;
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
     }
 
-    public void setUnit_price(BigDecimal unit_price) {
-        this.unit_price = unit_price;
+    public void setUnitPrice(BigDecimal unitPrice) {
+        this.unitPrice = unitPrice;
     }
 
     public String getDescription() {
@@ -93,8 +116,28 @@ public class ItemDTO implements Serializable {
                 ", image='" + image + '\'' +
                 ", rating=" + rating +
                 ", qty=" + qty +
-                ", unit_price=" + unit_price +
+                ", unitPrice=" + unitPrice +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    public enum Rating{
+
+        FIRST(1), SECOND(2), THIRD(3), FOURTH(4), FIFTH(5);
+
+        int rating;
+
+        Rating(int rating) {
+            this.rating = rating;
+        }
+
+        public int toNumber(){
+            return this.rating;
+        }
+
+        @Override
+        public String toString() {
+            return rating + "";
+        }
     }
 }
