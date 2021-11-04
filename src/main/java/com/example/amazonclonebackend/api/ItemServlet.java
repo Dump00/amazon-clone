@@ -25,7 +25,6 @@ public class ItemServlet extends HttpServlet {
     public void init() {
         try{
             Connection connection = dataSource.getConnection();
-            System.out.println(connection);
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
