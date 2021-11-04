@@ -1,6 +1,9 @@
 package com.example.amazonclonebackend.service;
 
+import com.example.amazonclonebackend.dto.OrderDetailDTO;
+
 import java.sql.Connection;
+import java.util.List;
 
 public class OrderService {
     private Connection connection;
@@ -9,7 +12,7 @@ public class OrderService {
         this.connection = connection;
     }
 
-    public void placeOrder(){
+    public void placeOrder(List<OrderDetailDTO> orderDetails){
 
     }
 }

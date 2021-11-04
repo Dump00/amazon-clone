@@ -18,3 +18,17 @@ INSERT INTO item VALUES ('I002', 'PlayStation 5',
     "renders music in exceptionally detailed sound quality — " +
     "so you revel in every tone, from deep, rich bass to crisp, clean highs.</div>');
 
+CREATE TABLE `order`(
+    id INT AUTO_INCREMENT PRIMARY KEY ,
+    date DATE NOT NULL
+);
+
+CREATE TABLE order_detail(
+    order_id INT NOT NULL,
+    code VARCHAR(10) NOT NULL,
+    qty INT NOT NULL,
+    unit_price DECIMAL(5,2) NOT NULL,
+    CONSTRAINT PRIMARY KEY (order_id, code),
+    CONSTRAINT FOREIGN KEY (order_id) REFERENCES `order` (id),
+    CONSTRAINT FOREIGN KEY (code) REFERENCES item (code)
+);
